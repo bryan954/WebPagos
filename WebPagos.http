@@ -1,0 +1,6 @@
+@WebPagos_HostAddress = http://localhost:5123
+
+GET {{WebPagos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
