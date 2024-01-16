@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebPagos;
+namespace WebPagos.Controllers;
 
 [ApiController]
 [Route("[controller]")]

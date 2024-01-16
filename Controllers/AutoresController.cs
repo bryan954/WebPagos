@@ -1,32 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebPagos.Contexts;
 
-namespace WebPagos;
+namespace WebPagos.Controllers;
 
 [ApiController]
 [Route("api/autores")]
 public class AutoresController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-    public AutoresController(IConfiguration configuration)
+    private readonly ApplicationDbContext _context;
+    public AutoresController(ApplicationDbContext context)
     {
-        _configuration = configuration;
+        _context = context;
     }
 
     [HttpGet]
-    public ActionResult<List<Autor>> Get()
+    public async Task<ActionResult<List<Autor>>> Get()
     {
-        return new List<Autor>()
-        {
-            new Autor() { Id = 1 , Nombre = "Bryan"},
-            new Autor() { Id = 2 , Nombre = "Gabriel"},
-        };
+        return await _context.Autores.ToListAsync();
     }
 
-    [HttpGet("secret")]
-    public ActionResult GetSecret()
+    [HttpPost]
+    public async Task<ActionResult> Post(Autor autor)
     {
-        var moviesApiKey = _configuration["Movies:ServiceApiKey"];
-        return Ok(moviesApiKey);
+        _context.Add(autor);
+        await _context.SaveChangesAsync();
+        return Ok();
     }
 
 }
