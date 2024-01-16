@@ -6,3 +6,17 @@ services:
     ports:
       - 5000:8080
     container_name: dotnet-asp
+    depends_on:
+      - db
+
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: dotnet-mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    restart: always
