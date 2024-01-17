@@ -28,4 +28,29 @@ public class AutoresController : ControllerBase
         return Ok();
     }
 
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult> Put(Autor autor, int id)
+    {
+        if (autor.Id != id)
+        {
+            return BadRequest("url erronea");
+        }
+        _context.Update(autor);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var existe = await _context.Autores.AnyAsync(x => x.Id == id);
+        if (!existe)
+        {
+            return NotFound();
+        }
+        _context.Remove(new Autor() { Id = id });
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
 }
