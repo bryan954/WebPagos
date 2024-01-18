@@ -29,6 +29,12 @@ public class AutoresController : ControllerBase
         return Ok();
     }
 
+    [HttpGet("first")]
+    public async Task<ActionResult> ObtenerPrimerAutor()
+    {
+        return Ok(await _context.Autores.FirstOrDefaultAsync());
+    }
+
     [HttpPut("{id:int}")]
     public async Task<ActionResult> Put(Autor autor, int id)
     {
