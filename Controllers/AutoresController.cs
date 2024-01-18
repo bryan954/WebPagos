@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebPagos.Contexts;
+using WebPagos.Entities;
 
 namespace WebPagos.Controllers;
 
@@ -17,7 +18,7 @@ public class AutoresController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<Autor>>> Get()
     {
-        return await _context.Autores.ToListAsync();
+        return await _context.Autores.Include( x => x.Libros ).ToListAsync();
     }
 
     [HttpPost]
